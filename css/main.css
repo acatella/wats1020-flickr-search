@@ -30,25 +30,40 @@ ul#images li button {
   display: flex;
   flex-flow: row wrap;
   margin: auto;
+  text-align: center;
+  max-width: 700px;
+  justify-content: center;
 }
 
 .flex-item {
-  width: 240px;
-  background: red;
-  height: 240px;
+  width: 150px;
+  height: 150px;
   margin: 5px;
-  border-radius: 5px;
+
 }
 
 .flex-item:hover {
-  width: 250px;
-  height: 250px;
-  cursor: pointer;
-  margin: 0;
+  width: 150px;
+  height: 150px;
+  box-shadow: 3px 3px 5px #5B5B5B;
+  margin: 2px 8px 8px 2px;
 }
+
 /*end flexbox styling*/
 
-#images .placeholder {
+
+/*loading animation style*/
+
+div.ball-grid-pulse {
+  margin: 200px auto;
+}
+div.ball-grid-pulse > div {
+  background: #ccc;
+}
+
+/*end loading animation style*/
+
+#images p {
     font-size: 2em;
     font-weight: lighter;
     color: #666;

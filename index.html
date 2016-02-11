@@ -20,7 +20,7 @@
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.css">
         <link rel="stylesheet" href="css/main.css">
-
+        <link rel="stylesheet" href="node_modules/loaders.css/loaders.min.css">
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>
@@ -39,7 +39,7 @@
           <a class="navbar-brand" href="#">Flickr Search</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
+          <form class="navbar-form navbar-right" name="searchForm" role="form">
             <div class="form-group">
               <input type="text" placeholder="Type keywords here." class="form-control" name="searchText">
             </div>
@@ -52,32 +52,13 @@
     <div class="container">
       <h1 class="search-title">Flickr Search</h1>
       <div id="images" class="flex-container">
-
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-        <div class="flex-item"></div>
-
-        <!-- TODO: Replace the content in this area with a grid of images based on the results of the search. -->
         <p class="placeholder">Search for images using the search bar above!</p>
       </div>
 
       <hr>
 
       <footer>
-        <p>&copy; Jane Student 2015</p>
+        <p>&copy; Afi C. Clark 2016</p>
       </footer>
     </div> <!-- /container -->
 
@@ -103,8 +84,8 @@
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
-
-    <script src="js/main.js"></script>
+    <script src="node_modules/loaders.css/loaders.css.js"></script>
+    <script src="js/mainScript.js"></script>
 
     </body>
 </html>

@@ -2,32 +2,60 @@
 
 $(document).ready(function () {
   //global variables for imageIndex and maxImageIndex so all buttons can update them
-  //global variable for searchString
+  var imageIndex = 0;
+  var maxImageIndex = 15;
 
-  $(searchButton).click(function() {
-    //Click event on search button
+  //global variable for searchString
+  var searchString = "";
+
+  $('button.search').click(function(e) {
     //prevent default behavior
+    e.preventDefault();
     //in case of multiple search terms, break string into array of separate words
+    searchString = document.forms["searchForm"]["searchText"].value;
+    searchString = searchString.split(" ");
     //join the string with delimeter matching the flickr api format, maybe '+'?
+    if (searchString.length > 1) {
+      searchString = searchString.join("+");
+    }
+    else {
+      searchString = searchString.join("");
+    }
     //set imageIndex and maxImageIndex to defaults
-    //call the searchImages() function with search parameter, imageIndex of 0, and maxImageIndex of 16
+    imageIndex = 0;
+    maxImageIndex = 15;
+    searchImages(searchString,imageIndex,maxImageIndex);
+
   });
 
-  function searchImages(searchString,imageIndex,maxImageIndex) {
+  function searchImages(srchStr,imgI,maxImgI) {    
     //replace html w/ loading icon
-    //make call for JSON data
-      //in 'success' field, create for loop starting at imageIndex and ending at maxImageIndex - show 16 photos at a time
-      //declare variable for full html
-      //declare variable for unique image ID
-      //build html for each photos
-        //consist of:
-          //opening a tag
-            //class of flex-item
-            //href to full size photo modal window (full size photo url to start)
-          //img tag with href of 240x240 thumbnail
-          //closing a tag
-      //add photo html to full html
-    //replace html with full html of photos
+    var imageDiv = $('#images');
+    imageDiv.html("<div class='loader-inner ball-grid-pulse'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
+    //What is with the below URL???
+    // $.getJSON("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=aee77ec71736bbd7eaa4e98b41142df0&tags=dogs&format=json&limit=16").done(function(data) {
+    var newHTML = [];
+    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?&format=json&limit=16&tags="+srchStr).done(function(data) {
+      if (data.items.length == 0) {
+        imageDiv.html("<p>Sorry, your search didn't return any results.</p>");
+      }
+
+      else {
+        $.each(data.items, function(i,photo) {
+          var newPhotoEl = "<a class='flex-item' href='"+photo.link+"'>";
+          var thumb = photo.media.m;
+          thumb = thumb.slice(0,thumb.length-6) + "_q.jpg";
+          var newImg = "<img src='"+thumb+"'>";
+          newPhotoEl += newImg+"</a>";
+          newHTML.push(newPhotoEl);
+        });
+
+        newHTML = newHTML.join("");
+        imageDiv.html(newHTML);
+      }
+
+  });
+
     //select and show next button
     //if imageIndex != 0, hide previous button
       //else select and show previous button

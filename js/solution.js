@@ -17,7 +17,7 @@ $(document).on('ready', function(){
       tags: tags,
       tagmode: "any",
       format: "json"
-    }).done(function( data ) {
+    }).done(function( data ) {      
       $('#images').empty();
       $('h1.search-title').first()[0].innerHTML = "Search for: " + tags;
       $.each( data.items, function( i, item ) {

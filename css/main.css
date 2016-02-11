@@ -23,17 +23,39 @@ ul#images li button {
 
 --- End of grid layout styles. */
 
-ul#images {
-    list-style-type: none;
+
+/*flex box styling for photo grid*/
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  margin: auto;
 }
 
-ul#images .placeholder {
+.flex-item {
+  width: 240px;
+  background: red;
+  height: 240px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.flex-item:hover {
+  width: 250px;
+  height: 250px;
+  cursor: pointer;
+  margin: 0;
+}
+/*end flexbox styling*/
+
+#images .placeholder {
     font-size: 2em;
     font-weight: lighter;
     color: #666;
     width: 100%;
     margin: 2em;
 }
+
 .modal-body img {
     width: 100%;
     height: auto;
@@ -42,16 +64,3 @@ ul#images .placeholder {
 hr {
     clear:both;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

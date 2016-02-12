@@ -30,6 +30,7 @@ $(document).ready(function () {
     imageDiv.html("<div class='loader-inner ball-grid-pulse'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
     var newHTML = [];
     $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?&format=json&limit=100&tags="+srchStr).done(function(data) {
+
       if (data.items.length == 0) {
         imageDiv.html("<p>Sorry, your search didn't return any results.</p>");
       }
@@ -38,19 +39,20 @@ $(document).ready(function () {
         imageDiv.html("");
         $.each(data.items, function(i,photo) {
             var newDiv = $('<div>').attr({
-              'class' : 'grid-item',
+              'class' : 'col-xs-12 col-sm-4 grid-item',
             });
 
-            var imgSrc = photo.media.m.slice(0,photo.media.m.length-6)+"_z.jpg";
+            var imgSrc = photo.media.m.slice(0,photo.media.m.length-6)+"_c.jpg";
             var newPhoto = $('<img>').attr({
               'data-toggle': "modal",
               'data-target': "#infoModal",
               'data-imgsrc': imgSrc,
               'src': imgSrc
             });
-            
+
             newPhoto.appendTo(newDiv);
             newDiv.appendTo(imageDiv);
+
         });
 
         var $grid = $('.grid').masonry({
@@ -58,12 +60,6 @@ $(document).ready(function () {
           percentPosition: true,
           columnWidth: '.grid-item'
         });
-
-
-
-        $grid.imagesLoaded().progress(function() {
-          $grid.masonry();
-        })
       };
     });
   };

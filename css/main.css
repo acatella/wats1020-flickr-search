@@ -26,23 +26,38 @@ ul#images li button {
 
 /*flex box styling for photo grid*/
 
-.grid {
+div.grid {
   margin: auto;
-  text-align: center;
-  /*width: 50%;*/
-  height: auto;
+  /*text-align: center;*/
+  width: 80%;
+
+}
+
+#images {
+  height: 100%;
 }
 
 .grid-item {
-  width: 33.33%;
-  float: left;
+  /*max-width: 33.33%;
+  float: left;*/
+  padding: 0;
 }
 
+.grid-item:hover {
+  cursor: pointer;
+  /*width: 105%;*/
+}
 .grid-item > img {
-  display: block;
+  /*display: block;*/
   max-width: 100%;
+
 }
 
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
 
 /*end flexbox styling*/
 

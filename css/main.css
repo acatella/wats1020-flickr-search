@@ -26,31 +26,31 @@ ul#images li button {
 
 /*flex box styling for photo grid*/
 
-.flex-container {
-  display: flex;
-  flex-flow: row wrap;
+.grid {
   margin: auto;
   text-align: center;
-  max-width: 700px;
-  justify-content: center;
+  /*width: 50%;*/
+  height: auto;
 }
 
-.flex-item {
-  width: 150px;
-  height: 150px;
-  margin: 5px;
-
+.grid-item {
+  width: 33.33%;
+  float: left;
 }
 
-.flex-item:hover {
-  width: 150px;
-  height: 150px;
-  box-shadow: 3px 3px 5px #5B5B5B;
-  margin: 2px 8px 8px 2px;
+.grid-item > img {
+  display: block;
+  max-width: 100%;
 }
+
 
 /*end flexbox styling*/
 
+/*button styling*/
+.flex-btn {
+  flex: 1 auto;
+  margin: 20px 34px;
+}
 
 /*loading animation style*/
 

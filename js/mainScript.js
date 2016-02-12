@@ -1,75 +1,78 @@
 
 
 $(document).ready(function () {
-  //global variables for imageIndex and maxImageIndex so all buttons can update them
   var imageIndex = 0;
   var maxImageIndex = 15;
-
-  //global variable for searchString
+  var startIndex = 1;
   var searchString = "";
 
   $('button.search').click(function(e) {
-    //prevent default behavior
     e.preventDefault();
-    //in case of multiple search terms, break string into array of separate words
     searchString = document.forms["searchForm"]["searchText"].value;
     searchString = searchString.split(" ");
-    //join the string with delimeter matching the flickr api format, maybe '+'?
+    if (searchString == "") {
+      $('#images').html("<p>You didn't enter any keywords...</p>");
+      return;
+    }
     if (searchString.length > 1) {
       searchString = searchString.join("+");
     }
     else {
       searchString = searchString.join("");
     }
-    //set imageIndex and maxImageIndex to defaults
-    imageIndex = 0;
-    maxImageIndex = 15;
-    searchImages(searchString,imageIndex,maxImageIndex);
+    searchImages(searchString);
 
   });
 
-  function searchImages(srchStr,imgI,maxImgI) {    
-    //replace html w/ loading icon
+  function searchImages(srchStr) {
     var imageDiv = $('#images');
+    //initiate the load screen
     imageDiv.html("<div class='loader-inner ball-grid-pulse'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
-    //What is with the below URL???
-    // $.getJSON("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=aee77ec71736bbd7eaa4e98b41142df0&tags=dogs&format=json&limit=16").done(function(data) {
     var newHTML = [];
-    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?&format=json&limit=16&tags="+srchStr).done(function(data) {
+    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?&format=json&limit=100&tags="+srchStr).done(function(data) {
       if (data.items.length == 0) {
         imageDiv.html("<p>Sorry, your search didn't return any results.</p>");
       }
 
       else {
+        imageDiv.html("");
         $.each(data.items, function(i,photo) {
-          var newPhotoEl = "<a class='flex-item' href='"+photo.link+"'>";
-          var thumb = photo.media.m;
-          thumb = thumb.slice(0,thumb.length-6) + "_q.jpg";
-          var newImg = "<img src='"+thumb+"'>";
-          newPhotoEl += newImg+"</a>";
-          newHTML.push(newPhotoEl);
+            var newDiv = $('<div>').attr({
+              'class' : 'grid-item',
+            });
+
+            var imgSrc = photo.media.m.slice(0,photo.media.m.length-6)+"_z.jpg";
+            var newPhoto = $('<img>').attr({
+              'data-toggle': "modal",
+              'data-target': "#infoModal",
+              'data-imgsrc': imgSrc,
+              'src': imgSrc
+            });
+            
+            newPhoto.appendTo(newDiv);
+            newDiv.appendTo(imageDiv);
         });
 
-        newHTML = newHTML.join("");
-        imageDiv.html(newHTML);
-      }
+        var $grid = $('.grid').masonry({
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          columnWidth: '.grid-item'
+        });
 
+
+
+        $grid.imagesLoaded().progress(function() {
+          $grid.masonry();
+        })
+      };
+    });
+  };
+
+  $('#infoModal').on('show.bs.modal', function(e) {
+    var button = $(e.relatedTarget);
+    var fullImg = button.data('imgsrc');
+    var imgEl = $('<img>').attr('src',fullImg);
+    var modalBody = $('.modal-body').empty();
+    imgEl.appendTo(modalBody);
   });
-
-    //select and show next button
-    //if imageIndex != 0, hide previous button
-      //else select and show previous button
-
-  };
-
-  function nextImages() {
-    //increments imageIndex and maxImageIndex
-    //calls searchImages() with new parameters
-  };
-
-  function prevImages () {
-    //decrements imageIndex and maxImageIndex
-    //calls searchImages() with new parameters
-  };
-
 });
